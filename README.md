@@ -24,11 +24,11 @@ This will return information about class:
 Class: <class_name> is <class_type>
 Properties:
     public: 1    //|\
-    protected: 4 //| count of properties
+    protected: 4 //| Quantity of properties
     private: 0   //|/
 Methods:
     public: 1    //|\
-    protected: 2 //| count of methods
+    protected: 2 //| Quantity of methods
     private: 0   //|/
 ```
  
