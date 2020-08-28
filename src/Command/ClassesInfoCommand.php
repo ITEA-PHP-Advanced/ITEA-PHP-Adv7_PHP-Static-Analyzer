@@ -42,7 +42,7 @@ final class ClassesInfoCommand extends Command
             ->addArgument(
                 'class_name',
                 InputArgument::REQUIRED,
-                'Full class name. For example: App\Service\DepositService'
+                'Full class name. For example: "App\Service\DepositService"'
             )
         ;
     }
