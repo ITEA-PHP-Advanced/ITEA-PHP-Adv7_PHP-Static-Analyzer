@@ -12,7 +12,6 @@ HEADER;
 $finder = \PhpCsFixer\Finder::create()
     ->in([
         'src',
-        'tests',
         'bin',
     ])
     ->name([
