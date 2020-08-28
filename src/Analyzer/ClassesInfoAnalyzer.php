@@ -16,6 +16,13 @@ namespace ITEA\PhpStaticAnalyzer\Analyzer;
 use ReflectionMethod;
 use ReflectionProperty;
 
+/**
+ * This class contain a logic to analyze other class and return this information:
+ * Class name and type,
+ * Quantity public, protected and private properties and methods.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
 final class ClassesInfoAnalyzer
 {
     private array $propertiesFilterList = [
@@ -23,6 +30,7 @@ final class ClassesInfoAnalyzer
         'protected' => ReflectionProperty::IS_PROTECTED,
         'private' => ReflectionProperty::IS_PRIVATE,
         ];
+
     private array $methodsFilterList = [
         'public' => ReflectionMethod::IS_PUBLIC,
         'protected' => ReflectionMethod::IS_PROTECTED,
@@ -48,7 +56,7 @@ final class ClassesInfoAnalyzer
             $info['properties'][$name] = \count($properties);
         }
 
-        foreach ($this->propertiesFilterList as $name => $filter) {
+        foreach ($this->methodsFilterList as $name => $filter) {
             $properties = $reflector->getMethods($filter);
             $count = 0;
 

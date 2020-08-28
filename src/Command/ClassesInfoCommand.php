@@ -20,6 +20,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * This class creates a command and shows the result of this command.
+ *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
 final class ClassesInfoCommand extends Command
@@ -61,6 +63,11 @@ final class ClassesInfoCommand extends Command
         return self::SUCCESS;
     }
 
+    /**
+     * Creating output string with information of class.
+     *
+     * @return string return the finished string
+     */
     private function createOutputStr(array $info): string
     {
         return \sprintf(
