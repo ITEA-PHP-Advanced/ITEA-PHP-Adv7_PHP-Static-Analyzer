@@ -10,8 +10,17 @@ TBD
 
 Usage
 -----
-
-TBD
+```bash
+./bin/console classes-analize-structure "<ClassName>"
+```
+or
+```bash
+php bin/console classes-analize-structure "<ClassName>"
+```
+Examlle:
+```bash
+./bin/console classes-analize-structure "ITEA\PhpStaticAnalyzer\Command\TestClassForReflection"
+```
 
 Code style fixer
 ----------------
