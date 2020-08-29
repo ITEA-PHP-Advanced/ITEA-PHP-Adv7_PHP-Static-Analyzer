@@ -15,8 +15,8 @@ $analyzer = new ClassesCreatedByDeveloperAnalyzer();
 $command = new ClassesCreatedByDeveloperCommand($analyzer);
 $application->add($command);
 
-$a = new ClassesInfoAnalyzer();
-$c = new ClassesInfoCommand($a);
-$application->add($c);
+$classInfoAnalyzer = new ClassesInfoAnalyzer();
+$classInfoCommand = new ClassesInfoCommand($classInfoAnalyzer);
+$application->add($classInfoCommand);
 
 $application->run();

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace ITEA\PhpStaticAnalyzer\Command;
 
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesInfoAnalyzer;
+use ITEA\PhpStaticAnalyzer\Exception\InvalidClassNameException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,16 +50,19 @@ final class ClassesInfoCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $class_name = $input->getArgument('class_name');
+        $className = $input->getArgument('class_name');
 
-        $info = $this->analyzer->analyze($class_name);
+        $classInfo = $this->analyzer->analyze($className);
 
-        if (\is_string($info)) {
-            $output->writeln($info);
+        try {
+            $classInfo = $this->analyzer->analyze($className);
+        } catch (InvalidClassNameException $e) {
+            $output->writeln($e);
 
             return self::FAILURE;
         }
-        $output->writeln($this->createOutputStr($info));
+
+        $output->writeln($this->createOutputStr($classInfo));
 
         return self::SUCCESS;
     }
@@ -66,9 +70,9 @@ final class ClassesInfoCommand extends Command
     /**
      * Creating output string with information of class.
      *
-     * @return string return the finished string
+     * @return object return the finished string
      */
-    private function createOutputStr(array $info): string
+    private function createOutputStr(object $classInfo): string
     {
         return \sprintf(
             'Class: <info>%s</info> is <info>%s</info>
@@ -79,6 +83,6 @@ Properties:
 Methods:
     public: %d
     protected: %d
-    private: %d', $info['name'], $info['type'], $info['properties']['public'], $info['properties']['protected'], $info['properties']['private'], $info['methods']['public'], $info['methods']['protected'], $info['methods']['private']);
+    private: %d', $classInfo->className, $classInfo->classType, $classInfo->properties['public'], $classInfo->properties['protected'], $classInfo->properties['private'], $classInfo->methods['public'], $classInfo->methods['protected'], $classInfo->methods['private']);
     }
 }

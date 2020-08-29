@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace ITEA\PhpStaticAnalyzer\Analyzer;
 
+use ITEA\PhpStaticAnalyzer\Exception\InvalidClassNameException;
+use ITEA\PhpStaticAnalyzer\Util\ClassesInfoUtil;
 use ReflectionMethod;
 use ReflectionProperty;
 
@@ -25,6 +27,9 @@ use ReflectionProperty;
  */
 final class ClassesInfoAnalyzer
 {
+    private const FINAL = 'Final';
+    private const ABSTRACT = 'Abstract';
+
     private array $propertiesFilterList = [
         'public' => ReflectionProperty::IS_PUBLIC,
         'protected' => ReflectionProperty::IS_PROTECTED,
@@ -37,52 +42,41 @@ final class ClassesInfoAnalyzer
         'private' => ReflectionMethod::IS_PRIVATE,
     ];
 
-    public function analyze(string $class_name)
+    public function analyze(string $className): ClassesInfoUtil
     {
-        $info = [];
+        $classInfo = new ClassesInfoUtil();
 
         try {
-            $reflector = new \ReflectionClass($class_name);
+            $reflector = new \ReflectionClass($className);
         } catch (\ReflectionException $e) {
-            return 'Invalid class name';
+            throw new InvalidClassNameException('Invalid class name');
         }
 
-        $info['name'] = $reflector->getShortName();
+        $classInfo->setClassName($reflector->getShortName());
 
-        $info['type'] = $this->getClassType($reflector);
+        $classInfo->setClassType($this->getClassType($reflector));
 
         foreach ($this->propertiesFilterList as $name => $filter) {
             $properties = $reflector->getProperties($filter);
-            $info['properties'][$name] = \count($properties);
+            $classInfo->setProperties($name, \count($properties));
         }
 
         foreach ($this->methodsFilterList as $name => $filter) {
-            $properties = $reflector->getMethods($filter);
-            $count = 0;
-
-            foreach ($properties as $method) {
-                if ($method->class == $class_name) {
-                    ++$count;
-                }
-            }
-            $info['methods'][$name] = $count;
+            $methods = $reflector->getMethods($filter);
+            $classInfo->setMethods($name, \count($methods));
         }
 
-        return $info;
+        return $classInfo;
     }
 
     private function getClassType(\ReflectionClass $reflector): string
     {
         if ($reflector->isFinal()) {
-            return 'Final';
+            return self::FINAL;
         }
 
         if ($reflector->isAbstract()) {
-            return 'Abstract';
-        }
-
-        if ($reflector->isInterface()) {
-            return 'Interface';
+            return self::ABSTRACT;
         }
 
         return 'Normal';
