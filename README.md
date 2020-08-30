@@ -13,6 +13,27 @@ Usage
 
 TBD
 
+__command:__ _classes-info_
+
+To use this command just run:
+```bash
+$ ./bin/console classes-info "<class_full_name>"
+```
+This will return information about class:
+```
+Class: <class_name> is <class_type>
+Properties:
+    public: 1    //|\
+    protected: 4 //| Quantity of properties
+    private: 0   //|/
+Methods:
+    public: 1    //|\
+    protected: 2 //| Quantity of methods
+    private: 0   //|/
+```
+ 
+
+
 Code style fixer
 ----------------
 
