@@ -48,11 +48,12 @@ final class ClassesAnalizeStructureClassCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $class_src_path = $input->getArgument('class_src_path');
+        $classSrcPath = $input->getArgument('class_src_path');
 
-        $data = $this->analyzer->analyze($class_src_path);
+        $data = $this->analyzer->analyze($classSrcPath);
 
-        $output->writeln(\sprintf('Class : <info>%s</info> , is :  <info>%s</info>' . PHP_EOL .
+        if (null != $data) {
+            $output->writeln(\sprintf('Class : <info>%s</info> , is :  <info>%s</info>' . PHP_EOL .
             'Properties :' . PHP_EOL .
             '   public: <info>%d</info>' . PHP_EOL .
             '   protected: <info>%d</info>' . PHP_EOL .
@@ -61,10 +62,14 @@ final class ClassesAnalizeStructureClassCommand extends Command
             '   public: <info>%d</info>' . PHP_EOL .
             '   protected: <info>%d</info>' . PHP_EOL .
             '   private: <info>%d</info>' . PHP_EOL
-            , $data->className, $data->classType,
-            $data->propPublic,$data->propProtected, $data->propPrivate,
-            $data->metPublic, $data->metProtected, $data->metPrivate));
+            , $data->getClassName(), $data->getClassType(),
+            $data->getPropPublic(),$data->getPropProtected(), $data->getPropPrivate(),
+            $data->getMetPublic(), $data->getMetProtected(), $data->getMetPrivate()));
 
-        return self::SUCCESS;
+            return self::SUCCESS;
+        }
+        $output->writeln('Check your command , "<ClassName>" - is wrong');
+
+        return self::FAILURE;
     }
 }

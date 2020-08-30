@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-use ITEA\PhpStaticAnalyzer\Analyzer\ClassStructureAnalyzer;
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
+use ITEA\PhpStaticAnalyzer\Analyzer\ClassStructureAnalyzer;
 use ITEA\PhpStaticAnalyzer\Command\ClassesAnalizeStructureClassCommand;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
 use Symfony\Component\Console\Application;

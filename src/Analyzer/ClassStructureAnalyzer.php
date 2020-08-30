@@ -18,48 +18,45 @@ namespace ITEA\PhpStaticAnalyzer\Analyzer;
  */
 final class ClassStructureAnalyzer
 {
-    const FINALCLASS = 'Final';
-    const ABSTRACTCLASS = 'Abstract';
-    const NORMALCLASS = 'Normal';
+    public const FINAL_CLASS = 'Final';
+    public const ABSTRACT_CLASS = 'Abstract';
+    public const NORMAL_CLASS = 'Normal';
 
     /**
      * This method analized your php class and return informatiob about it.
-     * @param string $class_src_path
+     *
      * @return array
      */
-    public function analyze(string $class_src_path): object
+    public function analyze(string $classSrcPath): ?object
     {
-        $data = new InformationAccumulateClass();
-
         try {
-            $reflector = new \ReflectionClass($class_src_path);
+            $reflector = new \ReflectionClass($classSrcPath);
 
-            $data->className = $reflector->getShortName();
+            $className = $reflector->getShortName();
 
-            $data->classType = $this->getTypeClass($reflector);
+            $classType = $this->getTypeClass($reflector);
 
-            [$data->propPublic, $data->propProtected, $data->propPrivate] = $this->countAccesibleProperties($reflector);
+            [$propPublic, $propProtected, $propPrivate] = $this->countAccesibleProperties($reflector);
 
-            [$data->metPublic, $data->metProtected, $data->metPrivate] = $this->countAccesibleMethods($reflector);
+            [$metPublic, $metProtected, $metPrivate] = $this->countAccesibleMethods($reflector);
 
-            return $data;
+            return  new InformationAccumulateClass($className, $classType, $propPublic, $propProtected, $propPrivate, $metPublic, $metProtected, $metPrivate);
         } catch (\ReflectionException $e) {
             return null;
         }
-
     }
 
     public function getTypeClass($reflector): string
     {
         if ($reflector->isFinal()) {
-            return self::FINALCLASS;
+            return self::FINAL_CLASS;
         }
 
         if ($reflector->isAbstract()) {
-            return self::ABSTRACTCLASS;
+            return self::ABSTRACT_CLASS;
         }
 
-        return self::NORMALCLASS;
+        return self::NORMAL_CLASS;
     }
 
     public function countAccesibleProperties($reflector): array
