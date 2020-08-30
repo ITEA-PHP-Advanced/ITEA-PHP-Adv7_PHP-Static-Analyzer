@@ -2,6 +2,8 @@
 <?php
 
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
+use ITEA\PhpStaticAnalyzer\Analyzer\ClassStructureAnalyzer;
+use ITEA\PhpStaticAnalyzer\Command\ClassesAnalizeStructureClassCommand;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
 use Symfony\Component\Console\Application;
 
@@ -12,5 +14,9 @@ $application = new Application('PHP Static Analyzer', 'v1.0.0');
 $analyzer = new ClassesCreatedByDeveloperAnalyzer();
 $command = new ClassesCreatedByDeveloperCommand($analyzer);
 $application->add($command);
+
+$analyzerStructureClass = new ClassStructureAnalyzer();
+$commandAnalizeStructure = new ClassesAnalizeStructureClassCommand($analyzerStructureClass);
+$application->add($commandAnalizeStructure);
 
 $application->run();
