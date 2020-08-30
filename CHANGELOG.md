@@ -1,6 +1,12 @@
 CHANGELOG for ITEA-PHP-Adv7_PHP-Static-Analyzer 
 ==========================
 
+Changelog for v1.2.0
+---------------------
+Fix Code style.
+PhpFileUtil.php had cyrillic character.
+Change some internal command logic. 
+
 Changelog for v1.1.0
 ---------------------
 

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Fedotov Evgeniy aka FEV <trafaret@trafaret.kiev.ua>
  */
-final class ClassInfo extends Command
+final class ClassInfoCommand extends Command
 {
     protected static $defaultName = 'class-info';
 
@@ -53,7 +53,7 @@ final class ClassInfo extends Command
 
         $classInfo = new ShowDataAboutClass();
 
-        $classInfo->ShowFullDataAboutclass($fullNameClass, $fullInfo);
+        $classInfo->showFullDataAboutclass($fullNameClass, $fullInfo);
 
         return self::SUCCESS;
     }

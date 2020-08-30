@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Fedotov Evgeniy aka FEV <trafaret@trafaret.kiev.ua>
  */
-final class ListOfAllClasses extends Command
+final class ListOfAllClassesCommand extends Command
 {
     protected static $defaultName = 'list-classes';
 

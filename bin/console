@@ -5,20 +5,20 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
-use ITEA\PhpStaticAnalyzer\Command\ClassInfo;
-use ITEA\PhpStaticAnalyzer\Command\ListOfAllClasses;
+use ITEA\PhpStaticAnalyzer\Command\ClassInfoCommand;
+use ITEA\PhpStaticAnalyzer\Command\ListOfAllClassesCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application('PHP Static Analyzer', 'v1.1.0');
+$application = new Application('PHP Static Analyzer', 'v1.2.0');
 
 $analyzer = new ClassesCreatedByDeveloperAnalyzer();
 $command = new ClassesCreatedByDeveloperCommand($analyzer);
 $application->add($command);
 
-$command = new ListOfAllClasses();
+$command = new ListOfAllClassesCommand();
 $application->add($command);
 
-$command = new ClassInfo();
+$command = new ClassInfoCommand();
 $application->add($command);
 
 $application->run();

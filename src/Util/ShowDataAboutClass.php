@@ -20,14 +20,18 @@ final class ShowDataAboutClass
     private int $counterMethodsProtected = 0;
     private int $counterMethodsPrivate = 0;
 
-    private string $classType = 'normal';
+    public const CLASS_NORMAL = 'normal';
+    public const CLASS_FINAL = 'final';
+    public const CLASS_ABSTRACT = 'abstract';
+
+    private string $classType;
 
     private array $propertiesList;
     private array $methodsList;
 
     public bool $listArgument = false;
 
-    public function ShowFullDataAboutClass(string $fullNameClass, ?bool $listArgument = false): void
+    public function showFullDataAboutClass(string $fullNameClass, ?bool $listArgument = false): void
     {
         $reflector = new \ReflectionClass($fullNameClass);
 
@@ -39,21 +43,23 @@ final class ShowDataAboutClass
 
         $this->getAllMethods($reflector);
 
-        $this->ShowSymmaryInfo($reflector);
+        $this->showSymmaryInfo($reflector);
     }
 
-    public function getClassType(\ReflectionClass $reflector): void
+    private function getClassType(\ReflectionClass $reflector): void
     {
+        $this->classType = $this::CLASS_NORMAL;
+
         if ($reflector->isFinal()) {
-            $this->classType = 'final';
+            $this->classType = $this::CLASS_FINAL;
         }
 
         if ($reflector->isAbstract()) {
-            $this->classType = 'abstract';
+            $this->classType = $this::CLASS_ABSTRACT;
         }
     }
 
-    public function getPropertyType(\ReflectionClass $reflector, string $propertyName): void
+    private function getPropertyType(\ReflectionClass $reflector, string $propertyName): void
     {
         if ($reflector->getProperty($propertyName)->isPublic()) {
             $this->propertiesList[$propertyName] = 'public';
@@ -71,7 +77,7 @@ final class ShowDataAboutClass
         }
     }
 
-    public function getMethodType(\ReflectionClass $reflector, string $methodName): void
+    private function getMethodType(\ReflectionClass $reflector, string $methodName): void
     {
         if ($reflector->getMethod($methodName)->isPublic()) {
             $this->methodsList[$methodName] = 'public';
@@ -89,7 +95,7 @@ final class ShowDataAboutClass
         }
     }
 
-    public function getAllProperties(\ReflectionClass $reflector): void
+    private function getAllProperties(\ReflectionClass $reflector): void
     {
         $propertiesArray = $reflector->getProperties();
 
@@ -100,7 +106,7 @@ final class ShowDataAboutClass
         }
     }
 
-    public function getAllMethods(\ReflectionClass $reflector): void
+    private function getAllMethods(\ReflectionClass $reflector): void
     {
         $methodsArray = $reflector->getMethods();
 
@@ -111,7 +117,7 @@ final class ShowDataAboutClass
         }
     }
 
-    public function ShowSymmaryInfo(\ReflectionClass $reflector): void
+    private function showSymmaryInfo(\ReflectionClass $reflector): void
     {
         echo 'Class: ' . $reflector->getName() . ' is ' . $this->classType . PHP_EOL;
 
