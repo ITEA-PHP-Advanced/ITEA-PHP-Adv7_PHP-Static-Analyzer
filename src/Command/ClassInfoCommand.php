@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the "default-project" package.
+ *
+ * (c) Vladimir Kuprienko <vldmr.kuprienko@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ITEA\PhpStaticAnalyzer\Command;
 
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassInfoAnalyzer;
@@ -83,17 +92,18 @@ final class ClassInfoCommand extends Command
     {
         $className = $input->getArgument('class_name');
         $classInfo = $this->analyzer->analyze($className);
-        $classInfo->type = $classInfo->type ?? 'normal';
+        $properties = $classInfo->getProperties();
+        $methods = $classInfo->getMethods();
 
-        $output->writeln(\sprintf("Class <info>%s</info> is <info>%s</info>.\n", $classInfo->name, $classInfo->type));
+        $output->writeln(\sprintf("Class <info>%s</info> is <info>%s</info>.\n", $classInfo->getName(), $classInfo->getType()));
 
         $output->writeln(\sprintf("<info>Properties:</info>\n%s", \implode('', \array_map(function ($key, $value) {
             return \sprintf("    %s: %s \n", $key, $value);
-        }, \array_keys($classInfo->properties), $classInfo->properties))));
+        }, \array_keys($properties), $properties))));
 
         $output->writeln(\sprintf("<info>Methods:</info>\n%s", \implode('', \array_map(function ($key, $value) {
             return \sprintf("    %s: %s \n", $key, $value);
-        }, \array_keys($classInfo->methods), $classInfo->methods))));
+        }, \array_keys($methods), $methods))));
 
         return self::SUCCESS;
     }

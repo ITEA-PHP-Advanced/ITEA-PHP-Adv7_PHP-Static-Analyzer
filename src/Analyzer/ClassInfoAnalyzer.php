@@ -2,10 +2,19 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the "default-project" package.
+ *
+ * (c) Vladimir Kuprienko <vldmr.kuprienko@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ITEA\PhpStaticAnalyzer\Analyzer;
 
-use Reflection;
-use ReflectionProperty;
+use ITEA\PhpStaticAnalyzer\Exception\ClassNotFoundException;
+use ITEA\PhpStaticAnalyzer\Util\ClassInfo;
 
 /**
  * ClassInfoAnalyzer class analyzes the class by it's name.
@@ -20,43 +29,16 @@ final class ClassInfoAnalyzer
      *
      * @param string $className class name with namespace to be analyzed
      *
-     * @return object object with the following information:
-     *                name (string) short name of the class
-     *                type (string) class type (normal, final, abstract)
-     *                properties (array) count of each property type (public, protected, private)
-     *                methods (array) count of each method type (public, protected, private)
-     *
-     * @author Alina Yavd <ya.alinka23@gmail.com>
+     * @return object object with the class information
      */
     public function analyze(string $className): object
     {
         try {
             $reflector = new \ReflectionClass($className);
         } catch (\ReflectionException $e) {
-            return (object) [];
+            throw new ClassNotFoundException(\sprintf('Class %s not found.', $className));
         }
 
-        $modifier = $reflector->getModifiers();
-        $types = Reflection::getModifierNames($modifier);
-
-        $properties = [
-            'public' => \count($reflector->getProperties(ReflectionProperty::IS_PUBLIC)),
-            'protected' => \count($reflector->getProperties(ReflectionProperty::IS_PROTECTED)),
-            'private' => \count($reflector->getProperties(ReflectionProperty::IS_PRIVATE)),
-        ];
-        $methods = [
-            'public' => \count($reflector->getMethods(ReflectionProperty::IS_PUBLIC)),
-            'protected' => \count($reflector->getMethods(ReflectionProperty::IS_PROTECTED)),
-            'private' => \count($reflector->getMethods(ReflectionProperty::IS_PRIVATE)),
-        ];
-
-        $info = [
-            'name' => $reflector->getShortName(),
-            'type' => \array_shift($types),
-            'properties' => $properties,
-            'methods' => $methods,
-        ];
-
-        return (object) $info;
+        return new ClassInfo($reflector);
     }
 }

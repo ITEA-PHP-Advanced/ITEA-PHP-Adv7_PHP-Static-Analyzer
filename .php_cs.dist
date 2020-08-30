@@ -32,6 +32,11 @@ return \PhpCsFixer\Config::create()
         '@PHP71Migration' => true,
         '@PHP71Migration:risky' => true,
         '@PHP73Migration' => true,
+        'header_comment' => [
+            'header' => $header,
+            'commentType' => 'comment',
+            'separate' => 'both',
+        ],
         'list_syntax' => ['syntax' => 'short'],
         'array_syntax' => ['syntax' => 'short'],
         'concat_space' => ['spacing' => 'one'],
