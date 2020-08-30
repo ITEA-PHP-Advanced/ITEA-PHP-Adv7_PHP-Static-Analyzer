@@ -70,7 +70,7 @@ final class ClassesInfoCommand extends Command
     /**
      * Creating output string with information of class.
      *
-     * @return object return the finished string
+     * @return string return the finished string
      */
     private function createOutputStr(object $classInfo): string
     {
@@ -83,6 +83,6 @@ Properties:
 Methods:
     public: %d
     protected: %d
-    private: %d', $classInfo->className, $classInfo->classType, $classInfo->properties['public'], $classInfo->properties['protected'], $classInfo->properties['private'], $classInfo->methods['public'], $classInfo->methods['protected'], $classInfo->methods['private']);
+    private: %d', $classInfo->getClassName(), $classInfo->getClassType(), $classInfo->getProperties('public'), $classInfo->getProperties('protected'), $classInfo->getProperties('private'), $classInfo->getMethods('public'), $classInfo->getMethods('protected'), $classInfo->getMethods('private'));
     }
 }

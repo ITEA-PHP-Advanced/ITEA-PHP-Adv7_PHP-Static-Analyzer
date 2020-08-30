@@ -27,16 +27,17 @@ use ReflectionProperty;
  */
 final class ClassesInfoAnalyzer
 {
-    private const FINAL = 'Final';
-    private const ABSTRACT = 'Abstract';
+    private const CLASS_TYPE_FINAL = 'Final';
+    private const CLASS_TYPE_ABSTRACT = 'Abstract';
+    private const CLASS_TYPE_NORMAL = 'Normal';
 
-    private array $propertiesFilterList = [
+    private const  PROPERTIES_FILTER_LIST = [
         'public' => ReflectionProperty::IS_PUBLIC,
         'protected' => ReflectionProperty::IS_PROTECTED,
         'private' => ReflectionProperty::IS_PRIVATE,
         ];
 
-    private array $methodsFilterList = [
+    private const  METHODS_FILTER_LIST = [
         'public' => ReflectionMethod::IS_PUBLIC,
         'protected' => ReflectionMethod::IS_PROTECTED,
         'private' => ReflectionMethod::IS_PRIVATE,
@@ -44,24 +45,20 @@ final class ClassesInfoAnalyzer
 
     public function analyze(string $className): ClassesInfoUtil
     {
-        $classInfo = new ClassesInfoUtil();
-
         try {
             $reflector = new \ReflectionClass($className);
         } catch (\ReflectionException $e) {
             throw new InvalidClassNameException('Invalid class name');
         }
 
-        $classInfo->setClassName($reflector->getShortName());
+        $classInfo = new ClassesInfoUtil($reflector->getShortName(), $this->getClassType($reflector));
 
-        $classInfo->setClassType($this->getClassType($reflector));
-
-        foreach ($this->propertiesFilterList as $name => $filter) {
+        foreach (self::PROPERTIES_FILTER_LIST as $name => $filter) {
             $properties = $reflector->getProperties($filter);
             $classInfo->setProperties($name, \count($properties));
         }
 
-        foreach ($this->methodsFilterList as $name => $filter) {
+        foreach (self::METHODS_FILTER_LIST as $name => $filter) {
             $methods = $reflector->getMethods($filter);
             $classInfo->setMethods($name, \count($methods));
         }
@@ -72,13 +69,13 @@ final class ClassesInfoAnalyzer
     private function getClassType(\ReflectionClass $reflector): string
     {
         if ($reflector->isFinal()) {
-            return self::FINAL;
+            return self::CLASS_TYPE_FINAL;
         }
 
         if ($reflector->isAbstract()) {
-            return self::ABSTRACT;
+            return self::CLASS_TYPE_ABSTRACT;
         }
 
-        return 'Normal';
+        return self::CLASS_TYPE_NORMAL;
     }
 }

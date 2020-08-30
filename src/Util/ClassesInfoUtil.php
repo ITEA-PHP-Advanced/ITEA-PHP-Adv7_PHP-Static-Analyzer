@@ -20,20 +20,26 @@ namespace ITEA\PhpStaticAnalyzer\Util;
  */
 class ClassesInfoUtil
 {
-    public string $className;
-    public string $classType;
+    private string $className;
+    private string $classType;
 
-    public array $properties = [];
-    public array $methods = [];
+    private array $properties = [];
+    private array $methods = [];
 
-    public function setClassName($className): void
+    public function __construct(string $className, string $classType)
     {
         $this->className = $className;
+        $this->classType = $classType;
     }
 
-    public function setClassType($classType): void
+    public function getClassName(): string
     {
-        $this->classType = $classType;
+        return $this->className;
+    }
+
+    public function getClassType(): string
+    {
+        return $this->classType;
     }
 
     public function setProperties($name, $quantity): void
@@ -41,8 +47,18 @@ class ClassesInfoUtil
         $this->properties[$name] = $quantity;
     }
 
+    public function getProperties(string $type): int
+    {
+        return $this->properties[$type];
+    }
+
     public function setMethods($name, $quantity): void
     {
         $this->methods[$name] = $quantity;
+    }
+
+    public function getMethods(string $type): int
+    {
+        return $this->methods[$type];
     }
 }
