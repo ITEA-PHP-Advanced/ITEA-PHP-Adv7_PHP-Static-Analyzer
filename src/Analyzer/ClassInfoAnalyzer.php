@@ -29,9 +29,9 @@ final class ClassInfoAnalyzer
      *
      * @param string $className class name with namespace to be analyzed
      *
-     * @return object object with the class information
+     * @return ClassInfo object with the class information
      */
-    public function analyze(string $className): object
+    public function analyze(string $className): ClassInfo
     {
         try {
             $reflector = new \ReflectionClass($className);

@@ -98,11 +98,11 @@ final class ClassInfoCommand extends Command
         $output->writeln(\sprintf("Class <info>%s</info> is <info>%s</info>.\n", $classInfo->getName(), $classInfo->getType()));
 
         $output->writeln(\sprintf("<info>Properties:</info>\n%s", \implode('', \array_map(function ($key, $value) {
-            return \sprintf("    %s: %s \n", $key, $value);
+            return \sprintf("    %s: %s \n", $key, \count($value));
         }, \array_keys($properties), $properties))));
 
         $output->writeln(\sprintf("<info>Methods:</info>\n%s", \implode('', \array_map(function ($key, $value) {
-            return \sprintf("    %s: %s \n", $key, $value);
+            return \sprintf("    %s: %s \n", $key, \count($value));
         }, \array_keys($methods), $methods))));
 
         return self::SUCCESS;

@@ -51,8 +51,8 @@ final class ClassInfo
         $this->type = \array_shift($types);
 
         foreach ($this->visibilities as $key => $visibility) {
-            $this->properties[$key] = \count($this->reflector->getProperties($visibility));
-            $this->methods[$key] = \count($this->reflector->getMethods($visibility));
+            $this->properties[$key] = $this->reflector->getProperties($visibility);
+            $this->methods[$key] = $this->reflector->getMethods($visibility);
         }
     }
 
