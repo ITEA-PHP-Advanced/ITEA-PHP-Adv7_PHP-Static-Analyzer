@@ -1,7 +1,7 @@
 {
   "name": "itea/php-static-analyzer",
   "description": "",
-  "type": "library",
+  "type": "project",
   "license": "BSD-3-Clause",
   "authors": [
     {

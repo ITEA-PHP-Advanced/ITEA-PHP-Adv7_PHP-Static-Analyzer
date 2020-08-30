@@ -8,23 +8,12 @@ Includes the following console commands:
 
 - `class-info` - Shows the class name, type, count of public, protected and private class properties and methods of the particular class.
 
-Installation
-------------
-
-TBD
 
 Usage
 -----
 
 - `classes-created-by`
 
-Register command in your code:
-```
-$application = new Application('PHP Static Analyzer', 'v1.0.0');
-$command = new ClassesCreatedByDeveloperCommand(new ClassesCreatedByDeveloperAnalyzer());
-$application->add($command);
-$application->run();
-```
 Run the console command:
 ```
 php path/to/application/file classes-created-by 'path/to/directory' developer@email.com
@@ -32,13 +21,6 @@ php path/to/application/file classes-created-by 'path/to/directory' developer@em
 
 - `class-info`
 
-Register command in your code:
-```
-$application = new Application('PHP Static Analyzer', 'v1.0.0');
-$command = new ClassInfoCommand(new ClassInfoAnalyzer());
-$application->add($command);
-$application->run();
-```
 Run the console command:
 ```
 php path/to/application/file class-info 'Name\Space\ClassName'
