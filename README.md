@@ -16,14 +16,14 @@ Usage
 
 Run the console command:
 ```
-php path/to/application/file classes-created-by 'path/to/directory' developer@email.com
+php bin/console classes-created-by 'path/to/directory' developer@email.com
 ```
 
 - `class-info`
 
 Run the console command:
 ```
-php path/to/application/file class-info 'Name\Space\ClassName'
+php bin/console class-info 'Name\Space\ClassName'
 ```
 
 Code style fixer
