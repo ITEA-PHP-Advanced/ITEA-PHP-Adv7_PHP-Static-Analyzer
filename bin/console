@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use ITEA\PhpStaticAnalyzer\Analyzer\ClassesAnalizeStructureAnalyzer;
+use ITEA\PhpStaticAnalyzer\Analyzer\ClassStructureAnalyzer;
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
 use ITEA\PhpStaticAnalyzer\Command\ClassesAnalizeStructureClassCommand;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
@@ -15,7 +15,7 @@ $analyzer = new ClassesCreatedByDeveloperAnalyzer();
 $command = new ClassesCreatedByDeveloperCommand($analyzer);
 $application->add($command);
 
-$analyzerStructureClass = new ClassesAnalizeStructureAnalyzer();
+$analyzerStructureClass = new ClassStructureAnalyzer();
 $commandAnalizeStructure = new ClassesAnalizeStructureClassCommand($analyzerStructureClass);
 $application->add($commandAnalizeStructure);
 

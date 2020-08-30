@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ITEA\PhpStaticAnalyzer\Command;
 
-use ITEA\PhpStaticAnalyzer\Analyzer\ClassesAnalizeStructureAnalyzer;
+use ITEA\PhpStaticAnalyzer\Analyzer\ClassStructureAnalyzer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,7 +27,7 @@ final class ClassesAnalizeStructureClassCommand extends Command
     protected static $defaultName = 'classes-analize-structure';
     private $analyzer;
 
-    public function __construct(ClassesAnalizeStructureAnalyzer $analyzer)
+    public function __construct(ClassStructureAnalyzer $analyzer)
     {
         parent::__construct();
         $this->analyzer = $analyzer;
@@ -61,9 +61,9 @@ final class ClassesAnalizeStructureClassCommand extends Command
             '   public: <info>%d</info>' . PHP_EOL .
             '   protected: <info>%d</info>' . PHP_EOL .
             '   private: <info>%d</info>' . PHP_EOL
-            , $data['class_name'], $data['class_type'],
-            $data['prop_public'],$data['prop_protected'],$data['prop_private'],
-            $data['met_public'], $data['met_protected'], $data['met_private']));
+            , $data->className, $data->classType,
+            $data->propPublic,$data->propProtected, $data->propPrivate,
+            $data->metPublic, $data->metProtected, $data->metPrivate));
 
         return self::SUCCESS;
     }

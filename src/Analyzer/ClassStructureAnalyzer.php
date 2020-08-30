@@ -16,44 +16,50 @@ namespace ITEA\PhpStaticAnalyzer\Analyzer;
 /**
  * @author Alexandr Bovsunovsky <bovsunovsky@rambler.ru>
  */
-final class ClassesAnalizeStructureAnalyzer
+final class ClassStructureAnalyzer
 {
+    const FINALCLASS = 'Final';
+    const ABSTRACTCLASS = 'Abstract';
+    const NORMALCLASS = 'Normal';
+
     /**
      * This method analized your php class and return informatiob about it.
      * @param string $class_src_path
      * @return array
      */
-    public function analyze(string $class_src_path): array
+    public function analyze(string $class_src_path): object
     {
-        $data = [];
+        $data = new InformationAccumulateClass();
 
         try {
             $reflector = new \ReflectionClass($class_src_path);
+
+            $data->className = $reflector->getShortName();
+
+            $data->classType = $this->getTypeClass($reflector);
+
+            [$data->propPublic, $data->propProtected, $data->propPrivate] = $this->countAccesibleProperties($reflector);
+
+            [$data->metPublic, $data->metProtected, $data->metPrivate] = $this->countAccesibleMethods($reflector);
+
+            return $data;
         } catch (\ReflectionException $e) {
             return null;
         }
-        $data['class_name'] = $reflector->getShortName();
 
-        $data['class_type'] = $this->getTypeClass($reflector);
-
-        [$data['prop_public'], $data['prop_protected'], $data['prop_private']] = $this->countAccesibleProperties($reflector);
-
-        [$data['met_public'], $data['met_protected'], $data['met_private']] = $this->countAccesibleMethods($reflector);
-
-        return $data;
     }
 
     public function getTypeClass($reflector): string
     {
         if ($reflector->isFinal()) {
-            return 'Final';
+            return self::FINALCLASS;
         }
 
         if ($reflector->isAbstract()) {
-            return 'Abstract';
+            return self::ABSTRACTCLASS;
         }
 
-        return 'Normal';
+        return self::NORMALCLASS;
     }
 
     public function countAccesibleProperties($reflector): array
