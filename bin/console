@@ -2,7 +2,9 @@
 <?php
 
 use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
+use ITEA\PhpStaticAnalyzer\Analyzer\ClassInfoAnalyzer;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
+use ITEA\PhpStaticAnalyzer\Command\ClassInfoCommand;
 use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -12,5 +14,8 @@ $application = new Application('PHP Static Analyzer', 'v1.0.0');
 $analyzer = new ClassesCreatedByDeveloperAnalyzer();
 $command = new ClassesCreatedByDeveloperCommand($analyzer);
 $application->add($command);
+
+$command2 = new ClassInfoCommand(new ClassInfoAnalyzer());
+$application->add($command2);
 
 $application->run();

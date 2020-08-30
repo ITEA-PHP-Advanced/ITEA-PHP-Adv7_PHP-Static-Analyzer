@@ -1,17 +1,30 @@
 PHP Static Analyzer
 ===================
 
-TBD
+Command line PHP analyzer.
 
-Installation
-------------
+Includes the following console commands:
+- `classes-created-by` - Shows the information how many classes created developer with particular email.
 
-TBD
+- `class-info` - Shows the class name, type, count of public, protected and private class properties and methods of the particular class.
+
 
 Usage
 -----
 
-TBD
+- `classes-created-by`
+
+Run the console command:
+```
+php bin/console classes-created-by 'path/to/directory' developer@email.com
+```
+
+- `class-info`
+
+Run the console command:
+```
+php bin/console class-info 'Name\Space\ClassName'
+```
 
 Code style fixer
 ----------------
