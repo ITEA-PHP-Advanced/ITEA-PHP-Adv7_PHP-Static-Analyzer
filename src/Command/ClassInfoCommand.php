@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  * ClassInfoCommand class registers a console command which shows information about particular class.
  *
  * ClassInfoCommand extends from [[Symfony\Component\Console\Command\Command]] and registers `class-info` console command.
- * Uses ClassInfoAnalyzer class to get information about the class.
  *
  * Required parameter is full class name (with namespace) of the class that has to be analyzed.
  *
@@ -62,6 +61,9 @@ final class ClassInfoCommand extends Command
         $this->analyzer = $analyzer;
     }
 
+    /**
+     * Defines parameters for the command.
+     */
     protected function configure(): void
     {
         $this

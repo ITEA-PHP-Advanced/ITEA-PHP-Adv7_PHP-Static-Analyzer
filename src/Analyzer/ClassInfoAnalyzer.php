@@ -18,7 +18,7 @@ final class ClassInfoAnalyzer
     /**
      * Analyzes the passed class by it's full name.
      *
-     * @param string $className full class name to be analyzed
+     * @param string $className class name with namespace to be analyzed
      *
      * @return object object with the following information:
      *                name (string) short name of the class
