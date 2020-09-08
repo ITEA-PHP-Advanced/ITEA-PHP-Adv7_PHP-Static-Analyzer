@@ -1,22 +1,31 @@
 #!/usr/bin/env php
 <?php
 
-use ITEA\PhpStaticAnalyzer\Analyzer\ClassesCreatedByDeveloperAnalyzer;
-use ITEA\PhpStaticAnalyzer\Analyzer\ClassSignature;
+use DI\ContainerBuilder;
 use ITEA\PhpStaticAnalyzer\Command\ClassesCreatedByDeveloperCommand;
 use ITEA\PhpStaticAnalyzer\Command\ClassSignatureInfoCommand;
 use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+$builder = new ContainerBuilder();
+$builder->addDefinitions([
+//    ClassesCreatedByDeveloperAnalyzer::class => \DI\create(ClassesCreatedByDeveloperAnalyzer::class),
+//    ClassSignature::class => \DI\create(ClassSignature::class),
+//    ClassesCreatedByDeveloperCommand::class => function (Container $c) {
+//        return new ClassesCreatedByDeveloperCommand($c->get(ClassesCreatedByDeveloperAnalyzer::class));
+//    },
+//    ClassSignatureInfoCommand::class => function (Container $c) {
+//        return new ClassSignatureInfoCommand($c->get(ClassSignature::class));
+//    },
+]);
+$container = $builder->build();
+
 $application = new Application('PHP Static Analyzer', 'v1.0.0');
 
-$analyzer = new ClassesCreatedByDeveloperAnalyzer();
-$command = new ClassesCreatedByDeveloperCommand($analyzer);
-$application->add($command);
-
-$analyzer = new ClassSignature();
-$command = new ClassSignatureInfoCommand($analyzer);
-$application->add($command);
+$application->addCommands([
+    $container->get(ClassesCreatedByDeveloperCommand::class),
+    $container->get(ClassSignatureInfoCommand::class),
+]);
 
 $application->run();
